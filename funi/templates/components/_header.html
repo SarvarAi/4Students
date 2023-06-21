@@ -1,0 +1,39 @@
+<header>
+    <div class="container">
+        <header class="d-flex justify-content-center py-3">
+            <ul class="nav nav-pills">
+
+                {% if request.path == '/' %}
+                <li class="nav-item"><a href="{% url 'home' %}" class="nav-link active" aria-current="page">Home</a></li>
+                {% else %}
+                <li class="nav-item"><a href="{% url 'home' %}" class="nav-link" aria-current="page">Home</a></li>
+                {% endif %}
+
+                {% if request.path == '/search/' %}
+                <li class="nav-item"><a href="{% url 'search_page' %}" class="nav-link active">Search</a></li>
+                {% else %}
+                <li class="nav-item"><a href="{% url 'search_page' %}" class="nav-link">Search</a></li>
+                {% endif %}
+
+
+                {% if request.path == '/pricing/' %}
+                <li class="nav-item"><a href="{% url 'pricing' %}" class="nav-link active">Pricing</a></li>
+                {% else %}
+                <li class="nav-item"><a href="{% url 'pricing' %}" class="nav-link">Pricing</a></li>
+                {% endif %}
+
+                {% if request.path == '/faq/' %}
+                <li class="nav-item"><a href="{% url 'faq' %}" class="nav-link active">FAQs</a></li>
+                {% else %}
+                <li class="nav-item"><a href="{% url 'faq' %}" class="nav-link">FAQs</a></li>
+                {% endif %}
+
+                {% if request.path == '/about-us/' %}
+                <li class="nav-item"><a href="{% url 'about_us' %}" class="nav-link active">About us</a></li>
+                {% else %}
+                <li class="nav-item"><a href="{% url 'about_us' %}" class="nav-link">About us</a></li>
+                {% endif %}
+            </ul>
+        </header>
+    </div>
+</header>

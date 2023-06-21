@@ -1,0 +1,13 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block hero %}
+{% include 'main_en/components/search/_hero.html' %}
+{% endblock hero %}
+
+{% block main %}
+
+{% include 'main_en/components/search/_form.html' %}
+{% include 'main_en/components/_cards.html' %}
+
+{% endblock main %}

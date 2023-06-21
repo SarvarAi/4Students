@@ -1,0 +1,88 @@
+<div class="col-md-7 col-lg-8">
+    <h4 class="mb-3">Please fill this form</h4>
+    <form action="{% url 'ask_question' %}" method="POST" class="needs-validation" novalidate="">
+        {% csrf_token %}
+        <div class="row g-3">
+            <div class="col-sm-6">
+                <label for="firstName" class="form-label">First name</label>
+                {{ form.first_name }}
+                {% if 'first_name' in form.errors %}
+                <small class="text-danger">
+                    {{ form.errors.first_name.as_text }}
+                </small>
+
+                {% endif %}
+            </div>
+
+            <div class="col-sm-6">
+                <label for="lastName" class="form-label">Last name</label>
+                {{ form.last_name }}
+                {% if 'last_name' in form.errors %}
+                <small class="text-danger">
+                    {{ form.errors.last_name.as_text }}
+                </small>
+
+                {% endif %}
+            </div>
+
+            <div class="col-12">
+                <label for="username" class="form-label">Email</label>
+                <div class="input-group has-validation">
+                    <span class="input-group-text">@</span>
+                    {{ form.email }}
+                    {% if 'email' in form.errors %}
+                    <small class="text-danger">
+                        {{ form.errors.email.as_text }}
+                    </small>
+
+                    {% endif %}
+                </div>
+            </div>
+
+            <div class="col-12">
+                <label for="email" class="form-label">Second Email <span
+                        class="text-body-secondary">(Optional)</span></label>
+                {{ form.second_email }}
+                {% if 'second_email' in form.errors %}
+                <small class="text-danger">
+                    {{ form.errors.second_email.as_text }}
+                </small>
+
+                {% endif %}
+            </div>
+
+            <div class="col-12">
+                <label for="address" class="form-label">Subject</label>
+                {{ form.subject }}
+                {% if 'subject' in form.errors %}
+                <small class="text-danger">
+                    {{ form.errors.subject.as_text }}
+                </small>
+
+                {% endif %}
+            </div>
+
+            <div class="col-12">
+                <label for="address2" class="form-label">Question</label>
+                {{ form.question }}
+                {% if 'question' in form.errors %}
+                <small class="text-danger">
+                    {{ form.errors.question.as_text }}
+                </small>
+
+                {% endif %}
+            </div>
+
+        </div>
+
+        <hr class="my-4">
+        <div class="row">
+            <div class="col-2">
+                <a href="{% url 'faq' %}" class="w-100 btn btn-outline-primary btn-lg">Back</a>
+            </div>
+            <div class="col-4">
+                <button class="w-75 btn btn-primary btn-lg" type="submit">Send</button>
+            </div>
+        </div>
+    </form>
+</div>

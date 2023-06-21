@@ -1,0 +1,29 @@
+<div class="row mt-5 p-3 gy-5">
+    {% for university in universities %}
+    <div class="col-3">
+        <div class="card">
+            <img src="{{ university.image.url }}" class="card-img-top" alt="..." width="300px" height="300px">
+            <div class="card-body">
+                <h5 class="card-title">{{ university.title }}</h5>
+                <p class="card-text">{{ university.short_description|truncatechars:150 }}</p>
+            </div>
+            <ul class="list-group list-group-flush">
+                <li class="list-group-item">Country: {{ university.country }}</li>
+                <li class="list-group-item">Region: {{ university.region }}</li>
+                {% if 'A' in university.university_class %}
+                <li class="list-group-item">Class: <span class="badge bg-success">{{ university.university_class }}</span></li>
+                {% elif 'C' in university.university_class %}
+                <li class="list-group-item">Class: <span class="badge bg-warning">{{ university.university_class }}</span></li>
+                {% endif %}
+            </ul>
+            <div class="card-body">
+                <a href="{{ university.get_absolute_url }}" class="card-link">Continue</a>
+                <a href="{{ university.official_link }}" class="card-link">Official website</a>
+            </div>
+        </div>
+    </div>
+    {% endfor %}
+
+
+
+</div>
