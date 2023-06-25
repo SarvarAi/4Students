@@ -50,3 +50,17 @@ class FAQForm(forms.ModelForm):
                   'second_email',
                   'subject',
                   'question')
+
+
+class AuthenticationForm(forms.Form):
+    username = forms.CharField(max_length=255, widget=forms.TextInput(attrs={
+        'class': 'form-control',
+        'id': 'floatingInput',
+        'placeholder': 'Enter your username'
+    }))
+
+    password = forms.CharField(max_length=255, widget=forms.PasswordInput(attrs={
+        'class': 'form-control',
+        'id': 'floatingPassword',
+        'placeholder': 'Password'
+    }))

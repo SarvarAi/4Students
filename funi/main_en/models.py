@@ -46,46 +46,7 @@ class FAQ(models.Model):
 
 
 class Account(models.Model):
-    """
-    {
-        time: auto now add
-        status: active or not active
-
-    };
-    photo:
-
-    username: account
-
-    First name
-    Last name
-    Middle name
-
-    Telephone Number
-    Second phone number
-    Date of Birth
-    Email Address
-    Second Email Optional
-
-    username: Telegram
-
-    Optional Passport
-
-    certificate from school 9-grade
-    certificate from school 11-grade
-
-    Certificates
-        1) main
-            IELTS
-            TOEFL
-            CEFR
-            SAT
-            GMAT
-            DTM
-        2) other
-            user will create its own
-
-    """
-    profile_photo = models.ImageField(upload_to='profile_photo/')
+    profile_photo = models.ImageField(upload_to='profile_photo/', blank=True, null=True)
     username = models.CharField(max_length=255)
     first_name = models.CharField(max_length=255)
     last_name = models.CharField(max_length=255)

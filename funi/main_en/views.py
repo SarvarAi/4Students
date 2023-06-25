@@ -1,18 +1,53 @@
 from django.views.generic import TemplateView, ListView
 from django.views.generic.edit import FormView
-from django.contrib import messages
+from django.contrib.auth import authenticate, login
+from django.urls import reverse_lazy
 
 from .models import University, FAQ
-from .forms import FAQForm
+from .forms import FAQForm, AuthenticationForm
 
 
 # Create your views here.
 
-class HomePageView(TemplateView):
+class HomePageView(FormView):
     template_name = 'main_en/index.html'
+    form_class = AuthenticationForm
+    success_url = reverse_lazy('home')
     extra_context = {
         'title': 'Home'
     }
+
+    def dispatch(self, request, *args, **kwargs):
+        # Check if 'form_data_1' exists in the session
+        if 'form_data_1' in self.request.session:
+            # If it exists, delete 'form_data_1' from the session
+            del self.request.session['form_data_1']
+
+        # Check if 'form_data_2' exists in the session
+        if 'form_data_2' in self.request.session:
+            # If it exists, delete 'form_data_2' from the session
+            del self.request.session['form_data_2']
+
+        # Continue with the regular dispatch process
+        return super().dispatch(request, *args, **kwargs)
+
+    def form_valid(self, form):
+        username = form.cleaned_data['username']  # Email entered in the username field
+        password = form.cleaned_data['password']
+        user = authenticate(request=self.request, username=username, password=password)
+
+        if user is not None:
+            login(self.request, user)
+            return super().form_valid(form)
+
+        form.add_error(None, 'Invalid email or password.')
+        return self.form_invalid(form)
+
+    def form_invalid(self, form):
+        print('Invalid')
+        for field in form.errors:
+            print(f'Field is {field}, Error is {form.errors[field].as_text()}')
+        return super().form_invalid(form)
 
 
 class SearchPageView(ListView):
@@ -48,13 +83,6 @@ class FAQPageView(TemplateView):
         return context
 
 
-class SignUpPageView(TemplateView):
-    template_name = 'main_en/signup.html'
-    extra_context = {
-        'title': 'Sign Up'
-    }
-
-
 class AskQuestionPageView(FormView):
     template_name = 'main_en/ask_question.html'
     form_class = FAQForm
@@ -68,12 +96,6 @@ class AskQuestionPageView(FormView):
         return super().form_valid(form)
 
     def form_invalid(self, form):
-        if 'last_name' in form.errors:
-            print(True)
-            print(form.errors['last_name'].as_text())
-
-        for field in form.errors:
-            messages.error(self.request, form.errors[field].as_text())
         return super().form_invalid(form)
 
 
@@ -100,3 +122,10 @@ class UniversityPageView(TemplateView):
         context['title'] = university.title
         context['university'] = university
         return context
+
+
+class AccountView(TemplateView):
+    template_name = 'main_en/account.html'
+    extra_context = {
+        'title': 'Account'
+    }

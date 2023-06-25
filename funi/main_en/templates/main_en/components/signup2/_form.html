@@ -6,17 +6,22 @@
         <h1 class="h3 mb-3 fw-normal">Create your account</h1>
 
         <div class="form-floating">
-            {{ form.first_name }}
-            <label for="floatingInput">First Name</label>
+            {{ form.username }}
+            <label for="floatingInput">Username</label>
         </div>
         <div class="form-floating">
-            {{ form.last_name }}
-            <label for="floatingInput">Last Name</label>
+            {{ form.telephone_number }}
+            <label for="floatingInput">Phone number</label>
         </div>
 
         <div class="form-floating">
-            {{ form.middle_name }}
-            <label for="floatingInput">Middle Name</label>
+            {{ form.date_of_birth }}
+            <label for="floatingInput">Date of birth</label>
+        </div>
+
+        <div class="form-floating">
+            {{ form.email }}
+            <label for="floatingInput">Your email</label>
         </div>
 
         <div class="form-check text-start my-3">
@@ -27,7 +32,7 @@
         </div>
         <div class="row">
             <div class="col">
-                <a href="{% url 'home' %}" class="btn btn-outline-primary w-100 py-2">Back</a>
+                <a href="{% url 'signup_1' %}" class="btn btn-outline-primary w-100 py-2">Back</a>
             </div>
             <div class="col">
                 <button class="btn btn-primary w-100 py-2" type="submit">Continue</button>

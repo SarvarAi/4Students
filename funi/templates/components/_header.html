@@ -33,6 +33,21 @@
                 {% else %}
                 <li class="nav-item"><a href="{% url 'about_us' %}" class="nav-link">About us</a></li>
                 {% endif %}
+
+                {% if user.is_authenticated %}
+
+                <li class="nav-item"><a href="{% url 'logout' %}" class="nav-link">{{ user.username }}</a></li>
+
+                {% else %}
+
+                {% if request.path == '/login/' %}
+                <li class="nav-item"><a href="{% url 'about_us' %}" class="nav-link active">Log in</a></li>
+                {% else %}
+                <li class="nav-item"><a href="{% url 'about_us' %}" class="nav-link">Log in</a></li>
+                {% endif %}
+
+                {% endif %}
+
             </ul>
         </header>
     </div>
