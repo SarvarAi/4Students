@@ -3,7 +3,7 @@ from django.views.generic.edit import FormView
 from django.contrib.auth import password_validation
 from django.contrib import messages
 from django.urls import reverse
-from django.contrib.auth import login
+from django.contrib.auth import login, authenticate
 from django.contrib.auth.models import User
 from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth import logout
@@ -92,18 +92,12 @@ class SignUp3View(FormView):
         username = data['username']
         password = form.cleaned_data['password1']
 
-        # Create an AuthenticationForm instance with the provided credentials
-        login_form = AuthenticationForm(data=self.request.POST)
-
-        # Set the username and password for authentication
-        login_form.fields['username'].widget.attrs.update({'value': username})
-        login_form.fields['password'].widget.attrs.update({'value': password})
-
         # Authenticate the user
-        user = login_form.get_user()
+        user = authenticate(username=username, password=password)
 
         # Log in the user
         login(self.request, user)
+
         del self.request.session['form_data_1']
         del self.request.session['form_data_2']
 
@@ -117,7 +111,7 @@ class SignUp3View(FormView):
             'middle_name': data1['middle_name'],
             'username': data2['username'],
             'telephone_number': data2['telephone_number'],
-            'data_of_birth': data2['date_of_birth'],
+            'date_of_birth': data2['date_of_birth'],
             'email': data2['email']
         }
         return personal_information
@@ -172,7 +166,6 @@ class SignUp3View(FormView):
             try:
                 password_validation.validate_password(form.cleaned_data['password1'])
                 if self.create_auth_user(form):
-
                     self.create_account()  # Creating user's account
                     self.login_user(form)  # Log in the user
                     return super().form_valid(form)
