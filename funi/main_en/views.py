@@ -124,8 +124,4 @@ class UniversityPageView(TemplateView):
         return context
 
 
-class AccountView(TemplateView):
-    template_name = 'main_en/account.html'
-    extra_context = {
-        'title': 'Account'
-    }
+

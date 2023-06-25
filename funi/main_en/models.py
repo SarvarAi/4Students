@@ -1,5 +1,6 @@
 from django.db import models
 from django.urls import reverse
+from django.contrib.auth.models import User
 
 
 # Create your models here.
@@ -46,6 +47,7 @@ class FAQ(models.Model):
 
 
 class Account(models.Model):
+    user = models.OneToOneField(User, on_delete=models.CASCADE, related_name='account')
     profile_photo = models.ImageField(upload_to='profile_photo/', blank=True, null=True)
     username = models.CharField(max_length=255)
     first_name = models.CharField(max_length=255)

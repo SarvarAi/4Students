@@ -1,6 +1,6 @@
 from django.contrib import admin
 
-from .models import University, FAQ
+from .models import University, FAQ, Account
 
 
 # Register your models here.
@@ -19,3 +19,7 @@ class FAQAdmin(admin.ModelAdmin):
     list_display_links = ('id',)
 
 
+@admin.register(Account)
+class AccountAdmin(admin.ModelAdmin):
+    list_display = ('id', 'username', 'first_name', 'email')
+    list_display_links = ('id',)

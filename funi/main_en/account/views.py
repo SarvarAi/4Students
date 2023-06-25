@@ -5,7 +5,6 @@ from django.contrib import messages
 from django.urls import reverse
 from django.contrib.auth import login, authenticate
 from django.contrib.auth.models import User
-from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth import logout
 from django.views.generic import RedirectView
 from django.urls import reverse_lazy
@@ -143,11 +142,17 @@ class SignUp3View(FormView):
         else:
             return False
 
+    def get_user(self):
+        data = self.get_session_data()
+        user = User.objects.get(username=data['username'])
+        return user
+
     def create_account(self):
         data = self.get_session_data()
         print('creating account')
         print(data['date_of_birth'])
         account = Account.objects.create(
+            user=self.get_user(),
             username=data['username'],
             first_name=data['first_name'],
             middle_name=data['middle_name'],
@@ -200,3 +205,14 @@ class LogoutView(RedirectView):
     def get_redirect_url(self, *args, **kwargs):
         logout(self.request)  # Logout the user
         return super().get_redirect_url(*args, **kwargs)
+
+
+class AccountView(TemplateView):
+    template_name = 'main_en/account.html'
+
+    def get_context_data(self, *, object_list=None, **kwargs):
+        context = super().get_context_data()
+        account = Account.objects.get(user=self.request.user)
+        context['account'] = account
+        context['title'] = 'Your Account'
+        return context
