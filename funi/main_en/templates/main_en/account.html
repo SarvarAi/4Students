@@ -13,54 +13,28 @@
 <body>
 <section class="py-5 my-5">
     <div class="container">
-        <h1 class="mb-5">Account Settings</h1>
+        <h1 class="mb-5 "><a href="{% url 'home' %}"><img src="{% static 'main_en\images\back.png' %}" alt="" width="30"
+                                                          height="30">Back</a>
+        </h1>
         <div class="bg-white shadow rounded-lg d-block d-sm-flex">
-            <div class="profile-tab-nav border-right">
-                <div class="p-4">
-                    <div class="img-circle text-center mb-3">
-                        <img src="img/user2.jpg" alt="Image" class="shadow" width="42" height="42">
-                    </div>
-                    <h4 class="text-center">Kiran Acharya</h4>
-                </div>
-                <div class="nav flex-column nav-pills" id="v-pills-tab" role="tablist" aria-orientation="vertical">
-                    <a class="nav-link active" id="account-tab" data-toggle="pill" href="#account" role="tab"
-                       aria-controls="account" aria-selected="true">
-                        <i class="fa fa-home text-center mr-1"></i>
-                        Account
-                    </a>
-                    <a class="nav-link" id="password-tab" data-toggle="pill" href="#password" role="tab"
-                       aria-controls="password" aria-selected="false">
-                        <i class="fa fa-key text-center mr-1"></i>
-                        Password
-                    </a>
-                    <a class="nav-link" id="security-tab" data-toggle="pill" href="#security" role="tab"
-                       aria-controls="security" aria-selected="false">
-                        <i class="fa fa-user text-center mr-1"></i>
-                        Security
-                    </a>
-                    <a class="nav-link" id="application-tab" data-toggle="pill" href="#application" role="tab"
-                       aria-controls="application" aria-selected="false">
-                        <i class="fa fa-tv text-center mr-1"></i>
-                        Application
-                    </a>
-                    <a class="nav-link" id="notification-tab" data-toggle="pill" href="#notification" role="tab"
-                       aria-controls="notification" aria-selected="false">
-                        <i class="fa fa-bell text-center mr-1"></i>
-                        Notification
-                    </a>
-                </div>
-            </div>
+            {% include 'main_en/components/account/profile_nav.html' %}
             <div class="tab-content p-4 p-md-5" id="v-pills-tabContent">
                 <div class="tab-pane fade show active" id="account" role="tabpanel" aria-labelledby="account-tab">
                     <h3 class="mb-4">Account Settings</h3>
                     <div class="row">
-                        <div class="col-md-6">
+                        <div class="col-md-4">
                             <div class="form-group">
                                 <label>First Name</label>
                                 <input type="text" class="form-control" value="Kiran">
                             </div>
                         </div>
-                        <div class="col-md-6">
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label>Middle Name</label>
+                                <input type="text" class="form-control" value="Middle">
+                            </div>
+                        </div>
+                        <div class="col-md-4">
                             <div class="form-group">
                                 <label>Last Name</label>
                                 <input type="text" class="form-control" value="Acharya">
