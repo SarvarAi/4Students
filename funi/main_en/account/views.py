@@ -1,3 +1,5 @@
+from typing import Dict
+
 from django.views.generic import TemplateView
 from django.views.generic.edit import FormView
 from django.contrib.auth import password_validation
@@ -8,6 +10,7 @@ from django.contrib.auth.models import User
 from django.contrib.auth import logout
 from django.views.generic import RedirectView
 from django.urls import reverse_lazy
+from django.http.response import HttpResponseRedirect
 
 from .forms import Signup1Form, Signup2Form, Signup3Form
 
@@ -15,31 +18,66 @@ from ..models import Account
 
 
 class SignUp1View(FormView):
+    """
+    Registration form consists from 3 small forms in 3 different web pages.
+    So this is first page, and it's first form.
+    """
     template_name = 'main_en/signup1.html'
     extra_context = {
         'title': 'Sign Up'
     }
-    form_class = Signup1Form
+    form_class = Signup1Form  # form for the first signup page
 
-    def get_initial(self):
+    def get_initial(self) -> Dict[str, str]:
+        """
+        In this method, we are checking if the user first time visiting this page
+        since if he goes back from second form to the first form
+        all his data that he saved in first form needs to be showed
+        :return: initial is dictionary that contains form1 data
+        """
         initial = super().get_initial()
         form_data_1 = self.request.session.get('form_data_1')
 
-        if form_data_1:
+        if form_data_1:  # checking if form_data_1 is empty
             initial['first_name'] = form_data_1.get('first_name')
             initial['last_name'] = form_data_1.get('last_name')
             initial['middle_name'] = form_data_1.get('middle_name')
-
         return initial
 
-    def get_success_url(self):
+    def get_success_url(self) -> str:
+        """
+        If the data in the form is validated next
+        we can go to the next (second) form,
+        so this method brings us next url
+        :return: reverse('signup_2') it is url to the second form
+        """
         return reverse('signup_2')
 
-    def form_valid(self, form):
+    def form_valid(self, form: Signup1Form) -> HttpResponseRedirect:
+        """
+        form_valid method checks if the form is valid
+        for our database, if it is not we can't proceed
+        next step
+        :param form: it is an object of Signup1Form which contains
+        all necessary information of form
+        :return: Redirect us to the next step, actually we
+        are inheriting it
+        """
+
+        # saving the data into the session in order to use it
+        # after user fills all three forms
         self.request.session['form_data_1'] = form.cleaned_data
         return super().form_valid(form)
 
-    def form_invalid(self, form):
+    def form_invalid(self, form: Signup1Form) -> HttpResponseRedirect:
+        """
+        If the user form is not valid, user stays in the same page
+        with same form
+        :param form: it is an object of Signup1Form which contains
+        all necessary information of form
+        :return: Redirect us to the next step, actually we
+        are inheriting it
+        """
         return super().form_invalid(form)
 
 
